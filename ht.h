@@ -284,7 +284,7 @@ private:
     // ADD MORE DATA MEMBERS HERE, AS NECESSARY
     size_t numItems; // currently occupied / inserted items 
     size_t tableSize;  // currr table size 
-    size_t capacities_idx; // idx of current table size in capac ities array 
+    // size_t capacities_idx; // idx of current table size in capac ities array 
     double resizeAlpha_; 
 
 };
@@ -311,7 +311,7 @@ HashTable<K,V,Prober,Hash,KEqual>::HashTable(
     // Initialize any other data members as necessary
     numItems = 0; 
     tableSize = 11; 
-    capacities_idx = 0; 
+    // capacities_idx = 0; 
     mIndex_ = 0; 
     resizeAlpha_ = resizeAlpha; 
 
@@ -504,9 +504,9 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
     size_t old_size = tableSize; 
     //this->numProbes_ = 0; 
     std::vector<HashItem*> prev_table = table_;
-    capacities_idx++; 
+    //capacities_idx++; 
     mIndex_++; 
-    tableSize = CAPACITIES[capacities_idx]; 
+    tableSize = CAPACITIES[mIndex_]; 
 
 
     table_ = std::vector<HashItem*>(tableSize, NULL); 
