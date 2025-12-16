@@ -502,7 +502,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
     // numitems - curr inserted 
     // create new table 
     size_t old_size = tableSize; 
-    this->numProbes_ = 0; 
+    //this->numProbes_ = 0; 
     std::vector<HashItem*> prev_table = table_;
     capacities_idx++; 
     mIndex_++; 
@@ -521,9 +521,11 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
 
             // CASE 2 ; still in table 
             /// just copy it over with insert function 
-            insert(prev_table[i]->item);  // fixed, takes 1 arg not two, just pass in the item niot j,v separately 
-            // avoid mem leaks 
-            delete prev_table[i]; 
+            else { 
+                insert(prev_table[i]->item);  // fixed, takes 1 arg not two, just pass in the item niot j,v separately 
+                // avoid mem leaks 
+                delete prev_table[i]; 
+            }
         }
 
     }
