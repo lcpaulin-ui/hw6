@@ -285,6 +285,7 @@ private:
     size_t numItems; // currently occupied / inserted items 
     size_t tableSize;  // currr table size 
     size_t capacities_idx; // idx of current table size in capac ities array 
+    size_t resizeAlpha_; 
 
 };
 
@@ -311,6 +312,7 @@ HashTable<K,V,Prober,Hash,KEqual>::HashTable(
     numItems = 0; 
     tableSize = 11; 
     capacities_idx = 0; 
+    resizeAlpha_ = resizeAlpha; 
 
 }
 
@@ -362,7 +364,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // if loading factor is above given 0.4, resize 
     // loading factor is occupied / table size 
     double loading_fact = double(numItems) / tableSize; 
-    if (loading_fact >= resizeAlpha) { 
+    if (loading_fact >= resizeAlpha_) { 
         resize(); 
     }
 
