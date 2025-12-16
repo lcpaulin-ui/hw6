@@ -7,7 +7,7 @@
 #include <unistd.h>
 #endif
 #include "hash.h"
-#include <gtest/gtest.h>
+// #include <gtest/gtest.h>
 #include <iostream>
 #include <cstdlib>
 #include <string>
