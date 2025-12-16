@@ -385,7 +385,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // if ithis is true then insert it into its already made location 
     if (table_[loc] != NULL && table_[loc]->deleted == false){
         table_[loc]->item.second = p.second; 
-        delItems--;
+        // delItems--;
 
     }
 
@@ -393,7 +393,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
         // delete old item first before putting a new one 
         if (table_[loc] != NULL){
             delete table_[loc]; 
-            delItems--:
+            delItems--; 
         }
 
         table_[loc] = new HashItem(p); 
