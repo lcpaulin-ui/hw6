@@ -362,7 +362,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // if loading factor is above given 0.4, resize 
     // loading factor is occupied / table size 
     double loading_fact = double(numItems) / tableSize; 
-    if (loading_fact >= this->resizeAlpha) { // add this-> for oos 
+    if (loading_fact >= resizeAlpha) { 
         resize(); 
     }
 
