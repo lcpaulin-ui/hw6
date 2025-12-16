@@ -106,17 +106,18 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 	// base case : finished going down this direction 
 	if (r >=board.size() || c >= board[0].size()){
 		// can i add it to the result? 
-		if (word.size() != 0 && (dict.find(word) != dict.end())){ // i have agone as far as i could, so can i add it to the result?? this will be the longest 
-			result.insert(word); 
-			return true; 
-		}
+		// if (word.size() != 0 && (dict.find(word) != dict.end())){ // i have agone as far as i could, so can i add it to the result?? this will be the longest 
+		// 	result.insert(word); 
+		// 	return true; 
+		// }
 		return false; // becaude i cant keep going anymore , return false means i have to add to result 
 	}
 
-	word = word + board[r][c];  // add next letter 
+	word = word + board[r][c];  // add the   letter in the word 
 	if (prefix.find(word) == prefix.end()) {
 		if (dict.find(word) != dict.end() ){
 			result.insert(word); 
+			return true; 
 		} 
 
 		return false; 
