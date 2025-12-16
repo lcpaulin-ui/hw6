@@ -91,9 +91,112 @@ std::set<std::string> boggle(const std::set<std::string>& dict, const std::set<s
 	return result;
 }
 
+
+// r,c are curr loc in the board 
+// dr , dc search direction
+// / dont change dr and dc bnut use them to change r and c 
+// build up a word along the direction of search and insert only the longest word found into the std::set<string> result set. 
 bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>& prefix, const std::vector<std::vector<char> >& board, 
 								   std::string word, std::set<std::string>& result, unsigned int r, unsigned int c, int dr, int dc)
 {
-//add your solution here!
+	//add your solution here!
 
+	// is word in dict? 
+	
+	// base case : finished going down this direction 
+	if (r >=board.size() || c >= board[0].size()){
+		// can i add it to the result? 
+		if (word.size() != 0 && (dict.find(word) != dict.end())){ // i have agone as far as i could, so can i add it to the result?? this will be the longest 
+			result.insert(word); 
+			return true; 
+		}
+		return false; // becaude i cant keep going anymore , return false means i have to add to result 
+	}
+
+	word = word + board[r][c];  // add next letter 
+	if (prefix.find(word) == prefix.end()) {
+		if (dict.find(word) != dict.end() ){
+			result.insert(word); 
+		} 
+
+		return false; 
+	} // backtrack before doing anything else because this ins not a valid prefix ie no reason to keep going !! 
+
+	// can i continue or should i stop 
+
+
+	bool add = false; 
+
+	// recurse 
+	if (dr == 0 && dc == 1){
+
+		add = boggleHelper(dict, prefix, board, word, result, r, c+1, 0,1); 
+		
+		// if (!add){ // if i cant continue, only add to res if its a word 
+		// 	if (dict.find(word) != dict.end()){
+		// 		result.insert(word);
+		// 		return true;
+		// 	}
+		// 	else {
+		// 		return false; 
+		// 	}
+
+	}
+	// 	}
+	// 	else if (add){
+	// 		return true; 
+	// 	}
+	// }
+
+	// else if (dr == 1 && dc == 1) {
+
+	// bool add = boggleHelper(dict, prefix, board, word, result, r + 1, c + 1, 1,1);
+
+	if (dr == 1 && dc == 0){
+
+		 add = boggleHelper(dict, prefix, board, word, result, r+1, c, 1,0); 
+		
+		// if (!add){ // if i cant continue, only add to res if its a word 
+		// 	if (dict.find(word) != dict.end()){
+		// 		result.insert(word);
+		// 		return true;
+		// 	}
+		// 	else {
+		// 		return false; 
+		// 	}
+
+		// }
+	}
+
+
+	if (dr == 1 && dc == 1){
+
+		 add = boggleHelper(dict, prefix, board, word, result, r+1, c+1, 1,1); 
+		
+	// 	if (!add){ // if i cant continue, only add to res if its a word 
+	// 		if (dict.find(word) != dict.end()){
+	// 			result.insert(word);
+	// 			return true;
+	// 		}
+	// 		else {
+	// 			return false; 
+	// 		}
+
+	// 	}
+	// }
+	}
+
+	if (add == false){
+		if (dict.find(word) != dict.end()){
+			result.insert(word); 
+			return true; 
+		}
+	}
+
+	return add; 
 }
+
+// if not in prefix set backtrack 
+// if in prefix set keep going 
+// if in dictionary set return true so u can add to set , but keep going there might eb alonger one 
+/// from guide  In our version of Boggle we also want to search for and return only the longest word that starts at a particular position (return EARS not EAR). 
