@@ -283,6 +283,7 @@ private:
 
     // ADD MORE DATA MEMBERS HERE, AS NECESSARY
     size_t numItems; // currently occupied / inserted items 
+    size_t delItems; // del for resize factor alpha 
     size_t tableSize;  // currr table size 
     // size_t capacities_idx; // idx of current table size in capac ities array 
     double resizeAlpha_; 
@@ -310,6 +311,7 @@ HashTable<K,V,Prober,Hash,KEqual>::HashTable(
 {
     // Initialize any other data members as necessary
     numItems = 0; 
+    delItems = 0; 
     tableSize = 11; 
     // capacities_idx = 0; 
     mIndex_ = 0; 
@@ -338,14 +340,14 @@ HashTable<K,V,Prober,Hash,KEqual>::~HashTable()
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 bool HashTable<K,V,Prober,Hash,KEqual>::empty() const
 {
-    return numItems == 0; 
+    return numItems - delItems == 0; 
 }
 
 // To be completed
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 size_t HashTable<K,V,Prober,Hash,KEqual>::size() const
 {
-    return numItems; // fixed, thought it should return tablesize but tests expect number of items in table 
+    return numItems - delItems; // fixed, thought it should return tablesize but tests expect number of items in table 
 
 }
 
@@ -368,7 +370,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // loading factor is occupied / table size 
     // double loading_fact = double(numItems) / tableSize; 
 
-    double loading_fact = double(numItems) / tableSize;  
+    double loading_fact = double(numItems + delItems) / tableSize;  
     if (loading_fact >= resizeAlpha_) { 
         resize(); 
     }
@@ -383,10 +385,16 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // if ithis is true then insert it into its already made location 
     if (table_[loc] != NULL && table_[loc]->deleted == false){
         table_[loc]->item.second = p.second; 
+        delItems--;
 
     }
 
     else {
+        // delete old item first before putting a new one 
+        if (table_[loc] != NULL){
+            delete table_[loc]; 
+            delItems--:
+        }
 
         table_[loc] = new HashItem(p); 
         numItems++; // only increase item count if im inserting new item. not rreplacing already used lcoagtio 
@@ -428,7 +436,8 @@ void HashTable<K,V,Prober,Hash,KEqual>::remove(const KeyType& key)
 
     if (table_[loc]->deleted == false ){
         table_[loc]->deleted = true; 
-        numItems--; // fix: even though im not deleting i habve to decrease numberf of items! 
+        delItems++; // fix: even though im not deleting i habve to decrease numberf of items! 
+        numItems--; 
     }
     // table_[loc]->deleted = true; 
     // numItems--; // fix: even though im not deleting i habve to decrease numberf of items! 
@@ -518,6 +527,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
 
     table_ = std::vector<HashItem*>(tableSize, NULL); 
     numItems = 0; 
+    delItems = 0;
 
 
 
