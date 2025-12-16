@@ -60,6 +60,8 @@ struct DoubleHashProber : public Prober<KeyType>
     // Add data members, as desired
     //==================================
 
+    
+
 private:
     // Complete
     HASH_INDEX_T findModulusToUseFromTableSize(HASH_INDEX_T currTableSize)
@@ -109,7 +111,10 @@ public:
         if( this->numProbes_ == this->m_) { // add this-> usage, except oos 
             return this->npos; 
         }
-        HASH_INDEX_T loc = (this->start_ + this->numProbes_*h2_) % this->m_;
+        // from lecture slides :::
+        // h(k,i) = [ h1(k) + i*h2(k) ] mod m
+        //         dhstep_ = modulus - h2_(key) % modulus;
+        HASH_INDEX_T loc = (this->start_ + this->numProbes_*this->dhstep_) % this->m_;
         this->numProbes_++;
         return loc; 
     }
@@ -317,7 +322,7 @@ HashTable<K,V,Prober,Hash,KEqual>::~HashTable()
     // just iterate through hte table and delete all items 
 
     for (int i = 0; i < tableSize; i++){
-        if (table_[i]) != NULL{
+        if (table_[i] != NULL){
             delete table_[i]; 
         }
     }
@@ -357,7 +362,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // if loading factor is above given 0.4, resize 
     // loading factor is occupied / table size 
     double loading_fact = double(numItems) / tableSize; 
-    if (loading_fact >= resizeAlpha) {
+    if (loading_fact >= this->resizeAlpha) { // add this-> for oos 
         resize(); 
     }
 
