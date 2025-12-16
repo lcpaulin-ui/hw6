@@ -314,6 +314,8 @@ HashTable<K,V,Prober,Hash,KEqual>::HashTable(
     capacities_idx = 0; 
     resizeAlpha_ = resizeAlpha; 
 
+    table_ = std::vector<HashItem*>(tableSize, NULL); 
+
 }
 
 // To be completed
