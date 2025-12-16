@@ -344,7 +344,7 @@ bool HashTable<K,V,Prober,Hash,KEqual>::empty() const
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 size_t HashTable<K,V,Prober,Hash,KEqual>::size() const
 {
-    return tableSize; 
+    return numItems; // fixed, thought it should return tablesize but tests expect number of items in table 
 
 }
 
