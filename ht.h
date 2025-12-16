@@ -285,7 +285,7 @@ private:
     size_t numItems; // currently occupied / inserted items 
     size_t tableSize;  // currr table size 
     size_t capacities_idx; // idx of current table size in capac ities array 
-    size_t resizeAlpha_; 
+    double resizeAlpha_; 
 
 };
 
@@ -312,6 +312,7 @@ HashTable<K,V,Prober,Hash,KEqual>::HashTable(
     numItems = 0; 
     tableSize = 11; 
     capacities_idx = 0; 
+    mIndex_ = 0; 
     resizeAlpha_ = resizeAlpha; 
 
     table_ = std::vector<HashItem*>(tableSize, NULL); 
@@ -502,6 +503,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
     size_t old_size = tableSize; 
     std::vector<HashItem*> prev_table = table_;
     capacities_idx++; 
+    mIndex_++; 
     tableSize = CAPACITIES[capacities_idx]; 
 
 
@@ -545,7 +547,7 @@ HASH_INDEX_T HashTable<K,V,Prober,Hash,KEqual>::probe(const KeyType& key) const
         // fill in the condition for this else if statement which should 
         // return 'loc' if the given key exists at this location
         // use find function 
-        else if(kequal_(table_[loc]->item.first, key)) {
+        else if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
             return loc;
         }
         loc = prober_.next();
