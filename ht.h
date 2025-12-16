@@ -512,6 +512,8 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
     table_ = std::vector<HashItem*>(tableSize, NULL); 
     numItems = 0; 
 
+
+
     for (int i = 0; i < old_size; i++){
         if (prev_table[i] != nullptr){
             // CASE 1; deleted from table 
@@ -553,7 +555,7 @@ HASH_INDEX_T HashTable<K,V,Prober,Hash,KEqual>::probe(const KeyType& key) const
         // use find function 
         // fix have to check if null firstbefore checkign if ti was deleted to avoid segmentation faults 
         // i am checking 3 things: if it is occupied, if it hasbeen deleted . and if theres already an equal element on it in which case i dont have to do anything 
-        else if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
+        if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
             return loc;
         }
         loc = prober_.next();
