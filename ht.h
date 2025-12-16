@@ -35,7 +35,7 @@ struct LinearProber : public Prober<KeyType> {
     {
         // Complete the condition below that indicates failure
         // to find the key or an empty slot
-        if( numProbes_ == m_) { // fill in 
+        if( this->numProbes_ == this->m_) { // fill in , have to add this because they are otherwise oos 
             return this->npos; 
         }
         HASH_INDEX_T loc = (this->start_ + this->numProbes_) % this->m_;
@@ -106,11 +106,11 @@ public:
         // Complete the condition below that indicates failure
         // to find the key or an empty slot
         // redesigned for double hashing, from linear hashing. using same template and changing logic 
-        if( numProbes_ == m_) {
+        if( this->numProbes_ == this->m_) { // add this-> usage, except oos 
             return this->npos; 
         }
-        HASH_INDEX_T loc = (this->start_ + numProbes_*h2_) % this->m_;
-        numProbes_++;
+        HASH_INDEX_T loc = (this->start_ + this->numProbes_*h2_) % this->m_;
+        this->numProbes_++;
         return loc; 
     }
 };
