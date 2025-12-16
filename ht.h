@@ -425,8 +425,13 @@ void HashTable<K,V,Prober,Hash,KEqual>::remove(const KeyType& key)
     if(table_[loc] == NULL ){ // not found!!!! have to add because it was crashing,,, logic needs to support removal of irems not there 
         return; 
     }
-    table_[loc]->deleted = true; 
-    numItems--; // fix: even though im not deleting i habve to decrease numberf of items! 
+
+    if (table_[loc]->deleted == false ){
+        table_[loc]->deleted = true; 
+        numItems--; // fix: even though im not deleting i habve to decrease numberf of items! 
+    }
+    // table_[loc]->deleted = true; 
+    // numItems--; // fix: even though im not deleting i habve to decrease numberf of items! 
 }
 
 
