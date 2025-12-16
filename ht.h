@@ -566,7 +566,7 @@ HASH_INDEX_T HashTable<K,V,Prober,Hash,KEqual>::probe(const KeyType& key) const
         // if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
         //     return loc;
         // }
-        if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
+        if(table_[loc] != NULL && (table_[loc]->deleted == true && kequal_(table_[loc]->item.first, key))) { // fix: skip elements that i have deleted !!!! 
             return loc;
         }
         loc = prober_.next();
