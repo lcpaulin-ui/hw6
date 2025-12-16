@@ -322,8 +322,6 @@ HashTable<K,V,Prober,Hash,KEqual>::~HashTable()
         }
     }
 
-    delete table_; 
-
 }
 
 // To be completed
@@ -497,10 +495,10 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
 
             // CASE 2 ; still in table 
             /// just copy it over with insert function 
-            insert(table_[i]->item.first, table[i]->item.second); 
+            insert(prev_table[i]->item.first, prev_table[i]->item.second); 
             // avoid mem leaks 
         }
-        delete prev_table; 
+        delete prev_table[i]; 
 
     }
     
