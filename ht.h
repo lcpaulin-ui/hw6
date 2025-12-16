@@ -495,10 +495,10 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
 
             // CASE 2 ; still in table 
             /// just copy it over with insert function 
-            insert(prev_table[i]->item.first, prev_table[i]->item.second); 
+            insert(prev_table[i]->item);  // fixed, takes 1 arg not two, just pass in the item niot j,v separately 
             // avoid mem leaks 
+            delete prev_table[i]; 
         }
-        delete prev_table[i]; 
 
     }
     
