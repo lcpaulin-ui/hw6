@@ -368,7 +368,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // loading factor is occupied / table size 
     // double loading_fact = double(numItems) / tableSize; 
 
-    double loading_fact = double(numItems + 1) / tableSize;  // fix for stress stests os that i was not couintnign the elet i was inserting before resizing 
+    double loading_fact = double(numItems) / tableSize;  
     if (loading_fact >= resizeAlpha_) { 
         resize(); 
     }
