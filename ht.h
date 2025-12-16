@@ -395,7 +395,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::remove(const KeyType& key)
     // 1 probe and find loc and jiust amark as deleted 
     // dont decrease table size yet 
 
-    size_t loc = probe(key.first); 
+    size_t loc = probe(key); 
     if(loc == npos) {return;}
     if(table_[loc] == NULL ){ // not found!!!! have to add because it was crashing,,, logic needs to support removal of irems not there 
         return; 
