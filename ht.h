@@ -384,10 +384,23 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     }
 
     else {
-      
+
         table_[loc] = new HashItem(p); 
         numItems++; // only increase item count if im inserting new item. not rreplacing already used lcoagtio 
     }
+
+    // else {
+    //     // check for collisions 
+    //     bool loc_not_found = true; 
+    //     while(loc_not_found){
+    //         if table_[loc] != NULL; 
+    //         loc = probe(p.first); 
+    //         else {break; }
+    //     }
+        
+    //     table_[loc] = new HashItem(p); 
+    //     numItems++; // only increase item count if im inserting new item. not rreplacing already used lcoagtio 
+    // }
     // probe(p)
     // HASH_INDEX_T HashTable<K,V,Prober,Hash,KEqual>::probe(const KeyType& key) const
 
@@ -489,7 +502,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::resize()
     size_t old_size = tableSize; 
     std::vector<HashItem*> prev_table = table_;
     capacities_idx++; 
-    size_t tableSize = CAPACITIES[capacities_idx]; 
+    tableSize = CAPACITIES[capacities_idx]; 
 
 
     table_ = std::vector<HashItem*>(tableSize, NULL); 
