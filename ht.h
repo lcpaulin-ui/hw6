@@ -366,7 +366,9 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
 
     // if loading factor is above given 0.4, resize 
     // loading factor is occupied / table size 
-    double loading_fact = double(numItems) / tableSize; 
+    // double loading_fact = double(numItems) / tableSize; 
+
+    double loading_fact = double(numItems + 1) / tableSize;  // fix for stress stests os that i was not couintnign the elet i was inserting before resizing 
     if (loading_fact >= resizeAlpha_) { 
         resize(); 
     }
@@ -555,6 +557,10 @@ HASH_INDEX_T HashTable<K,V,Prober,Hash,KEqual>::probe(const KeyType& key) const
         // use find function 
         // fix have to check if null firstbefore checkign if ti was deleted to avoid segmentation faults 
         // i am checking 3 things: if it is occupied, if it hasbeen deleted . and if theres already an equal element on it in which case i dont have to do anything 
+
+        // if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
+        //     return loc;
+        // }
         if(table_[loc] != NULL && table_[loc]->deleted == false && kequal_(table_[loc]->item.first, key)) { // fix: skip elements that i have deleted !!!! 
             return loc;
         }
