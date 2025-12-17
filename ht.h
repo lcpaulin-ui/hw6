@@ -340,14 +340,14 @@ HashTable<K,V,Prober,Hash,KEqual>::~HashTable()
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 bool HashTable<K,V,Prober,Hash,KEqual>::empty() const
 {
-    return numItems - delItems == 0; 
+    return numItems == 0; 
 }
 
 // To be completed
 template<typename K, typename V, typename Prober, typename Hash, typename KEqual>
 size_t HashTable<K,V,Prober,Hash,KEqual>::size() const
 {
-    return numItems - delItems; // fixed, thought it should return tablesize but tests expect number of items in table 
+    return numItems; // fixed, thought it should return tablesize but tests expect number of items in table 
 
 }
 
