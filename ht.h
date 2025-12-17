@@ -370,7 +370,7 @@ void HashTable<K,V,Prober,Hash,KEqual>::insert(const ItemType& p)
     // loading factor is occupied / table size 
     // double loading_fact = double(numItems) / tableSize; 
 
-    double loading_fact = double(numItems + delItems) / tableSize;  
+    double loading_fact = double(numItems + delItems) / tableSize;   // cast double  
     if (loading_fact >= resizeAlpha_) { 
         resize(); 
     }
