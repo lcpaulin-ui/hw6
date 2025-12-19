@@ -194,10 +194,11 @@ bool boggleHelper(const std::set<std::string>& dict, const std::set<std::string>
 		}
 	}
 
+	
 	return add; 
 }
 
-// if not in prefix set backtrack 
+// if not in prefix set backtrack .
 // if in prefix set keep going 
 // if in dictionary set return true so u can add to set , but keep going there might eb alonger one 
 /// from guide  In our version of Boggle we also want to search for and return only the longest word that starts at a particular position (return EARS not EAR). 
